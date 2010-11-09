@@ -3,8 +3,10 @@ This is the official Java wrapper for the iRail API.
 USAGE
 ------
 
-copy the api folder into your project. Now you can use the function in DataBuilder to get the
-right data in an ArrayList
+1. Download https://github.com/downloads/pietercolpaert/iRailForJ/iRailForJ.jar
+2. copy iRailForJ jar file in your project
+
+Now you can use the function in DataBuilder to get the right data in an ArrayList
 
 Example:
 
@@ -32,6 +34,6 @@ LICENSE
 ---------
 
 The Code is released under GPL v3. This means you can take this code, and put it into your project.
-Your project however should be GPLv3 as well.
+Your project however should be licensed under a GPL v3 compatible license.
 
 Author: Pieter Colpaert <pieter[aŧ]iRail.be> - http://bonsansnom.wordpress.com
