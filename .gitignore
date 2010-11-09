@@ -1,3 +1,5 @@
 nbproject/
 build.xml
 manifst.mf
+test/
+build/
