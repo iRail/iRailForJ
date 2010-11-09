@@ -21,11 +21,15 @@ import org.xml.sax.SAXException;
  */
 public class Parser {
 
-    public static List<Connection> parseConnections(String url) throws ParserConfigurationException, SAXException, IOException, Exception {
+    private static Document getDocument(String url) throws Exception{
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         dbf.setValidating(false);
         DocumentBuilder db = dbf.newDocumentBuilder();
-        Document doc = db.parse(url);
+        return db.parse(url);
+    }
+
+    public static List<Connection> parseConnections(String url) throws ParserConfigurationException, SAXException, IOException, Exception {
+        Document doc = getDocument(url);
         ArrayList<Connection> cons = new ArrayList<Connection>();
         Element rootNode = doc.getDocumentElement();
         NodeList connectionNodes = rootNode.getChildNodes();
@@ -38,6 +42,22 @@ public class Parser {
             cons.add(c);
         }
         return cons;
+    }
+
+    public static List<Station> parseStations(String url) throws Exception{
+        Document doc = getDocument(url);
+        ArrayList<Station> stations = new ArrayList<Station>();
+        Element rootNode = doc.getDocumentElement();
+        NodeList stationNodes = rootNode.getChildNodes();
+        if (stationNodes.item(0).getNodeName().equals("error")) {
+            throw new Exception("error:" + stationNodes.item(0).getFirstChild().getNodeName());
+        }
+        for (int i = 0; i < stationNodes.getLength(); i++) {
+            Node stationNode = stationNodes.item(i);
+            Station s = readStation(stationNode);
+            stations.add(s);
+        }
+        return stations;
     }
 
     private static Connection readConnection(NodeList childNodes) {
