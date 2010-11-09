@@ -1,19 +1,22 @@
 package api.DOM;
 
-import api.datastructs.*;
-import java.io.IOException;
+import api.datastructs.Geoloc;
+import api.datastructs.Station;
+import api.datastructs.TripNode;
+import api.datastructs.Vehicle;
+import api.datastructs.Via;
+import api.datastructs.ViaTripNode;
+import api.datastructs.Connection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 /**
  *
@@ -28,7 +31,7 @@ public class Parser {
         return db.parse(url);
     }
 
-    public static List<Connection> parseConnections(String url) throws ParserConfigurationException, SAXException, IOException, Exception {
+    public static List<Connection> parseConnections(String url) throws Exception {
         Document doc = getDocument(url);
         ArrayList<Connection> cons = new ArrayList<Connection>();
         Element rootNode = doc.getDocumentElement();

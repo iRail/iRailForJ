@@ -1,10 +1,35 @@
 This is the official Java wrapper for the iRal API.
 
-usage:
+USAGE
+------
 
-copy api.DOM and api.datastructs into your project. Now you can do: Parser.parseConnections(url);
-url is the full url with GET parameters.
+copy the api folder into your project. Now you can use the function in DataBuilder to get the
+right data in an ArrayList
 
+Example:
+
+        try {
+            DataBuilder db = DataBuilder.getInstance("iRail for J Test program");
+            db.setCountry("be"); //nl works as well
+            db.setLang("NL");
+            ArrayList <Connection> cons = db.getConnections("Harelbeke", "Gent");
+            System.out.println("Platform: " + cons.get(0).getDeparture().getPlatform());
+            System.out.println("Arrivaltime: "+cons.get(0).getDeparture().getTime());
+            System.out.println("Arrivaltime: "+cons.get(0).getArrival().getTime());
+            System.out.println("Delay: " + cons.get(0).getDeparture().getDelay());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+LINKS
+------
+
+http://project.iRail.be
+http://iRail.be
+
+
+LICENSE
+---------
 
 The Code is released under GPL v3. This means you can take this code, and put it into your project.
 Your project however should be GPLv3 as well.

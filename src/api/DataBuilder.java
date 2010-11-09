@@ -2,7 +2,8 @@ package api;
 
 import api.DOM.Parser;
 import java.util.ArrayList;
-import api.datastructs.*;
+import api.datastructs.Connection;
+import api.datastructs.Station;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
