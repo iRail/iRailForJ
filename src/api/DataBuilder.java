@@ -3,7 +3,9 @@ package api;
 import api.DOM.Parser;
 import java.util.ArrayList;
 import api.datastructs.Connection;
+import api.datastructs.Liveboard;
 import api.datastructs.Station;
+import api.datastructs.VehicleInformation;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,6 +20,7 @@ public class DataBuilder {
     private String country = "be";
     private String lang = "EN";
     private String results = "6";
+    private boolean dev = false;
 
 
     private DataBuilder(){
@@ -32,6 +35,15 @@ public class DataBuilder {
         System.setProperty("http.agent", appname);
         return me;
     }
+
+    public VehicleInformation getVehicleInformation(String vehicleid) throws Exception{
+        return Parser.parseVehicle(getBaseUrl() + "vehicle/?id=" + vehicleid);
+    }
+
+    public Liveboard getLiveboard(String station) throws Exception{
+        return Parser.parseLiveboard(getBaseUrl() + "liveboard/?station=" + station);
+    }
+
     public ArrayList<Connection> getConnections(String from, String to) throws Exception{
         return getConnections(from, to, new Date(), true);
     }
@@ -47,7 +59,7 @@ public class DataBuilder {
         }else {
             timeSel = "arr";
         }
-        String url = getBaseUrl() + "connections/?from=" + from + "&to=" + to + "&results=" + results + "&date=" + date + "&time=" + time + "&lang=" + lang + "&timeSel";
+        String url = getBaseUrl() + "connections/?from=" + from + "&to=" + to + "&results=" + results + "&date=" + date + "&time=" + time + "&lang=" + lang + "&timeSel=" + timeSel;
         return  (ArrayList<Connection>) Parser.parseConnections(url);
     }
 
@@ -57,7 +69,13 @@ public class DataBuilder {
     }
 
     private String getBaseUrl(){
-        String url = "http://api.irail."+ country + "/";
+
+        String url = null;
+        if(dev){
+            url = "http://dev.api.irail."+ country + "/";
+        }else{
+            url = "http://api.irail."+ country + "/";
+        }
         return url;
     }
 
@@ -83,6 +101,10 @@ public class DataBuilder {
 
     public void setResults(String results) {
         this.results = results;
+    }
+
+    public void setDev(boolean b) {
+        this.dev = b;
     }
 
 
