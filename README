@@ -3,7 +3,7 @@ This is the official Java wrapper for the iRail API.
 USAGE
 ------
 
-1. Download the .jar at https://github.com/iRail/iRailForJ/archives/master
+1. Download the .jar at https://github.com/downloads/iRail/iRailForJ/iRailForJ.jar
 2. copy iRailForJ jar file in your project
 
 Now you can use the function in DataBuilder to get the right data in an ArrayList
