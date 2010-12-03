@@ -8,7 +8,6 @@ import java.util.Date;
  */
 public class TripNode
 {
-
     private Station station;
     private String  platform;
     private Vehicle vehicle;

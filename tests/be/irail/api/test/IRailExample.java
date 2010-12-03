@@ -1,19 +1,15 @@
-This is the official Java wrapper for the iRail API.
+package be.irail.api.test;
 
-USAGE
-------
+import be.irail.api.IRail;
+import be.irail.api.data.Connection;
+import be.irail.api.data.TripNode;
+import java.util.Calendar;
+import java.util.List;
 
-1. Download the .jar at https://github.com/downloads/iRail/iRailForJ/iRailForJ.jar
-2. copy iRailForJ jar file in your project
-
-
-Example: construct an IRail instance connecting to the dev API, with language set to dutch.
-		 get connections from LIEDEKERKE to BRUSSELS CENTRAL stations.
-		 list departure and arrival for each, skipping non-direct connections.
-         formatted a la NMBS.
-
----cut here---
-
+/**
+ *
+ * @author frank
+ */
 public class IRailExample
 {
     public static final String TEST_URL="http://dev.api.irail.be";
@@ -54,29 +50,3 @@ public class IRailExample
         }
     }
 }
-
----cut here---
-
-output example:
-
-DEPARTURE [20:47 LIEDEKERKE             IC   3 +00H10] -> ARRIVAL [21:11 BRUSSEL CENTRAAL       IC   1]
-DEPARTURE [21:17 LIEDEKERKE             IR   3 +00H00] -> ARRIVAL [21:39 BRUSSEL CENTRAAL       IR   3]
-DEPARTURE [21:19 LIEDEKERKE             CR   1 +00H00] -> ARRIVAL [21:55 BRUSSEL CENTRAAL       CR   2]
-DEPARTURE [21:47 LIEDEKERKE             IC   3 +00H00] -> ARRIVAL [22:16 BRUSSEL CENTRAAL       IC   1]
-DEPARTURE [22:17 LIEDEKERKE             IR   3 +00H00] -> ARRIVAL [22:39 BRUSSEL CENTRAAL       IR   3]
-
-
-LINKS
-------
-
-http://project.iRail.be
-http://iRail.be
-
-
-LICENSE
----------
-
-The Code is released under GPL v3. This means you can take this code, and put it into your project.
-Your project however should be licensed under a GPL v3 compatible license.
-
-Author: Pieter Colpaert <pieter[aŧ]iRail.be> - http://bonsansnom.wordpress.com

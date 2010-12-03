@@ -40,4 +40,9 @@ public class Connection
     {
         return vias;
     }
+
+    public boolean hasVias()
+    {
+        return vias!=null;
+    }
 }

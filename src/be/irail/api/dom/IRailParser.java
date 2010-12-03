@@ -31,7 +31,7 @@ import org.w3c.dom.NodeList;
  */
 public class IRailParser
 {
-    private static Pattern vehiclePattern = Pattern.compile("^([A-Z][A-Z])\\.([A-Z]+)\\.(P|CR|IC|IR)?([0-9]+)$");
+    private static Pattern vehiclePattern = Pattern.compile("^([A-Za-z][A-Za-z])\\.([A-Za-z]+)\\.(P|CR|IC|IR|INT|THA|L|Bus)?([0-9]+)$");
 
     /* -------------------------------------------------------------------------------------------------------------------- */
 
@@ -145,11 +145,11 @@ public class IRailParser
             Node n = childNodes.item(i);
             if (n.getNodeName().equals("departure"))
             {
-                dep = readTripNode(n.getChildNodes());
+                dep = readTripNode(n);
             }
             else if (n.getNodeName().equals("arrival"))
             {
-                arr = readTripNode(n.getChildNodes());
+                arr = readTripNode(n);
             }
             else if (n.getNodeName().equals("duration"))
             {
@@ -163,13 +163,17 @@ public class IRailParser
         return new Connection(arr, dep, duration, vias);
     }
 
-    private static TripNode readTripNode(NodeList nodes) throws Exception
+    private static TripNode readTripNode(Node node) throws Exception
     {
         Station st = null;
         String platform = null;
         Vehicle v = null;
         Date t = null;
-        int delay = 0;
+
+        NamedNodeMap m = node.getAttributes();
+        int delay = Integer.parseInt(m.getNamedItem("delay").getFirstChild().getNodeValue());
+
+        NodeList nodes=node.getChildNodes();
 
         for (int i = 0; i < nodes.getLength(); i++)
         {
@@ -191,10 +195,9 @@ public class IRailParser
             }
             else if (n.getNodeName().equals("time"))
             {
-
                 t = new Date(Long.parseLong(n.getFirstChild().getNodeValue()) * 1000);
             }
-            else if (n.getNodeName().equals("delay"))
+            else if (n.getNodeName().equals("delay"))   // does this ever occur as a node?
             {
                 delay = Integer.parseInt(n.getFirstChild().getNodeValue());
             }
@@ -218,9 +221,9 @@ public class IRailParser
         NamedNodeMap m = n.getAttributes();
         String x = m.getNamedItem("locationX").getFirstChild().getNodeValue();
         String y = m.getNamedItem("locationY").getFirstChild().getNodeValue();
+        String id = m.getNamedItem("id").getFirstChild().getNodeValue();
         Location g = new Location(Double.parseDouble(x), Double.parseDouble(y));
-        //ID not yet implemented
-        return new Station(n.getFirstChild().getNodeValue(), "IDNYI", g);
+        return new Station(n.getFirstChild().getNodeValue(), id, g);
     }
 
     private static Vehicle readVehicle(Node n) throws Exception

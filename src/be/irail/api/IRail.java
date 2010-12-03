@@ -13,7 +13,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Singleton pattern
  * @author pieterc
  */
 public class IRail
