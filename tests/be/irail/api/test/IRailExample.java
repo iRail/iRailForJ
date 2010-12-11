@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class IRailExample
 {
-    public static final String TEST_URL="http://dev.api.irail.be";
+    public static final String TEST_URL="http://api.irail.be";
 
     public static void main(String[] argv) throws Exception
     {
