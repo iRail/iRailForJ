@@ -40,7 +40,7 @@ public class IRailParser
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         dbf.setValidating(false);
         DocumentBuilder db = dbf.newDocumentBuilder();
-        return db.parse(url.toString());
+        return db.parse(url.openConnection().getInputStream());
     }
 
     public static Liveboard parseLiveboard(URL url) throws Exception
@@ -63,7 +63,7 @@ public class IRailParser
             }
             else if (liveboardNodes.item(i).getNodeName().equals("arrivals") || liveboardNodes.item(i).getNodeName().equals("departures"))
             {
-                nodes = readLiveboardNodes(liveboardNodes.item(i).getChildNodes());
+                nodes = readLiveboardNodes(liveboardNodes.item(i));
             }
 
         }
@@ -171,7 +171,7 @@ public class IRailParser
         Date t = null;
 
         NamedNodeMap m = node.getAttributes();
-        int delay = Integer.parseInt(m.getNamedItem("delay").getFirstChild().getNodeValue());
+        int delay = Integer.parseInt(m.getNamedItem("delay").getNodeValue());
 
         NodeList nodes=node.getChildNodes();
 
@@ -219,9 +219,9 @@ public class IRailParser
     private static Station readStation(Node n)
     {
         NamedNodeMap m = n.getAttributes();
-        String x = m.getNamedItem("locationX").getFirstChild().getNodeValue();
-        String y = m.getNamedItem("locationY").getFirstChild().getNodeValue();
-        String id = m.getNamedItem("id").getFirstChild().getNodeValue();
+        String x = m.getNamedItem("locationX").getNodeValue();
+        String y = m.getNamedItem("locationY").getNodeValue();
+        String id = m.getNamedItem("id").getNodeValue();
         Location g = new Location(Double.parseDouble(x), Double.parseDouble(y));
         return new Station(n.getFirstChild().getNodeValue(), id, g);
     }
@@ -295,16 +295,23 @@ public class IRailParser
         return new ViaTripNode(platform, t);
     }
 
-    private static ArrayList<ArrivalDeparture> readLiveboardNodes(NodeList nodes) throws Exception
+    private static ArrayList<ArrivalDeparture> readLiveboardNodes(Node node) throws Exception
     {
+        
         ArrayList<ArrivalDeparture> a = new ArrayList<ArrivalDeparture>();
+        
+
+        NodeList nodes=node.getChildNodes();
         for (int i = 0; i < nodes.getLength(); i++)
         {
             NodeList n = nodes.item(i).getChildNodes();
+            NamedNodeMap m = nodes.item(i).getAttributes();
             Station s = null;
             Vehicle v = null;
             Date d = null;
             String p = null;
+            int delay = Integer.parseInt(m.getNamedItem("delay").getNodeValue());
+            
             for (int j = 0; j < n.getLength(); j++)
             {
                 if (n.item(j).getNodeName().equals("vehicle"))
@@ -324,7 +331,7 @@ public class IRailParser
                     p = n.item(j).getFirstChild().getNodeValue();
                 }
             }
-            ArrivalDeparture ad = new ArrivalDeparture(s, v, d, p);
+            ArrivalDeparture ad = new ArrivalDeparture(s, v, d, p,delay);
             a.add(ad);
 
         }
@@ -338,7 +345,7 @@ public class IRailParser
         {
             NodeList stoplist = nodes.item(i).getChildNodes();
             Station s = null;
-            int delay = Integer.parseInt(nodes.item(i).getAttributes().getNamedItem("delay").getFirstChild().getNodeValue());
+            int delay = Integer.parseInt(nodes.item(i).getAttributes().getNamedItem("delay").getNodeValue());
             Date time = null;
             for (int j = 0; j < stoplist.getLength(); j++)
             {

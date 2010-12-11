@@ -36,7 +36,7 @@ public class Stations
         try
         {
             stations = iRail.getStations();
-            assertEquals(stations.get(0).getName(), "AALST");
+            assertEquals("Aalst",stations.get(0).getName());
 
         }
         catch (Exception ex)
