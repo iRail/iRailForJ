@@ -1,4 +1,4 @@
-package be.irail.api.test;
+package be.irail.examples;
 
 import be.irail.api.IRail;
 import be.irail.api.data.Connection;
@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  *
- * @author frank
+ * @author frank@apsu.be
  */
 public class IRailExample
 {

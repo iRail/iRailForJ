@@ -18,6 +18,7 @@ import java.util.Date;
 public class IRail
 {
     private static final String DEFAULT_LANGUAGE="en";
+    private static final String WRAPPER_SUFFIX="IRailForJ";
     private static final int    NO_MAX_RESULTS=0;
     
     private String  language;
@@ -57,11 +58,12 @@ public class IRail
         this.providerURL=providerURL;
         this.language=language;
         this.maxResults=maxResults;
+        setAgent(agentName);
     }
 
     /* --------------------------------------------------------------------------------------------- */
     
-    public VehicleInformation getVehicleInformation(Vehicle vehicle) throws Exception
+    public synchronized VehicleInformation getVehicleInformation(Vehicle vehicle) throws Exception
     {
         URLFactory  urlFactory=new URLFactory(providerURL,"vehicle/");
                     urlFactory.addQuery("id",vehicle.getId());
@@ -69,7 +71,7 @@ public class IRail
         return IRailParser.parseVehicle(urlFactory.getURL());
     }
 
-    public Liveboard getLiveboard(Station station) throws Exception
+    public synchronized Liveboard getLiveboard(Station station) throws Exception
     {
         URLFactory  urlFactory=new URLFactory(providerURL,"liveboard/");
                     urlFactory.addQuery("station",station.getName());
@@ -77,17 +79,17 @@ public class IRail
         return IRailParser.parseLiveboard(urlFactory.getURL());
     }
 
-    public ArrayList<Connection> getConnections(String from, String to) throws Exception
+    public synchronized ArrayList<Connection> getConnections(String from, String to) throws Exception
     {
         return getConnections(from, to, null, false);
     }
 
-     public ArrayList<Connection> getConnections(String from, String to, Date dateTime) throws Exception
+    public synchronized ArrayList<Connection> getConnections(String from, String to, Date dateTime) throws Exception
     {
         return getConnections(from, to, dateTime, false);
     }
 
-    public ArrayList<Connection> getConnections(String from, String to,  Date dateTime, boolean wantArrivalTime) throws Exception
+    public synchronized ArrayList<Connection> getConnections(String from, String to,  Date dateTime, boolean wantArrivalTime) throws Exception
     {
         URLFactory  urlFactory=new URLFactory(providerURL,"connections/");
                     urlFactory.addQuery("from",from);
@@ -116,7 +118,7 @@ public class IRail
         return (ArrayList<Connection>)IRailParser.parseConnections(urlFactory.getURL());
     }
 
-    public ArrayList<Station> getStations() throws Exception
+    public synchronized ArrayList<Station> getStations() throws Exception
     {
         URLFactory  urlFactory=new URLFactory(providerURL,"stations/");
                     urlFactory.addQuery("lang",language);
@@ -150,12 +152,12 @@ public class IRail
 
     /**
      *
-     * @param agentName is the parameter that is used to identify yourself in the IRail api. Set it to "-" if you want to remain anonymous. Set it to your application name if you want us to see it's you
+     * @param agentName is the parameter that is used to identify yourself in the IRail api. Set it to null if you want to remain anonymous. Set it to your application name if you want us to see it's you
      * @return
      */
-    public IRail setAgent(String agentName)
+    public final IRail setAgent(String agentName)
     {
-        System.setProperty("http.agent", agentName);
+        System.setProperty("http.agent", agentName!=null?agentName+";"+WRAPPER_SUFFIX:WRAPPER_SUFFIX);
         return this;
     }
 }

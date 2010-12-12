@@ -13,13 +13,13 @@ public class Station
     public Station(String name, String id, Location location)
     {
         this.id = id;
-        this.name = name;
+        this.name = name.trim();
         this.location = location;
     }
 
     public Station(String name)
     {
-        this.name = name;
+        this.name = name.trim();
     }
 
     public Location getLocation()
@@ -50,5 +50,11 @@ public class Station
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    @Override
+    public String toString()
+    {
+        return name;
     }
 }

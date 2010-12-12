@@ -56,7 +56,7 @@ public class Connections
                 TripNode arrival=connection.getArrival();
                 TripNode departure=connection.getDeparture();
                 logger.log(Level.SEVERE, "Connection ARRIVAL [{0} {1} ON PLATFORM {2} AT {3}", new Object[]{arrival.getVehicle().getType(), arrival.getVehicle().getNumber(), arrival.getPlatform(), arrival.getTime().toString()});
-                logger.log(Level.SEVERE, "Connection DEPARTS [{0} {1} ON PLATFORM {2} AT {3}", new Object[]{departure.getVehicle().getType(), departure.getVehicle().getNumber(), departure.getPlatform(), departure.getTime().toString()});
+                //logger.log(Level.SEVERE, "Connection DEPARTS [{0} {1} ON PLATFORM {2} AT {3}", new Object[]{departure.getVehicle().getType(), departure.getVehicle().getNumber(), departure.getPlatform(), departure.getTime().toString()});
             }
         }
         catch (Exception ex)

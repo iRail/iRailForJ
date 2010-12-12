@@ -31,7 +31,7 @@ import org.w3c.dom.NodeList;
  */
 public class IRailParser
 {
-    private static Pattern vehiclePattern = Pattern.compile("^([A-Za-z][A-Za-z])\\.([A-Za-z]+)\\.(P|CR|IC|IR|INT|THA|L|Bus)?([0-9]+)$");
+    private static Pattern vehiclePattern = Pattern.compile("^([A-Za-z][A-Za-z])\\.([A-Za-z]+)\\.([a-zA-Z]+)?([0-9]+)$");
 
     /* -------------------------------------------------------------------------------------------------------------------- */
 

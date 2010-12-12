@@ -8,13 +8,15 @@ public class ArrivalDeparture
     private Vehicle vehicle;
     private Date    date;
     private String  platform;
+    private int     delay;
 
-    public ArrivalDeparture(Station station, Vehicle vehicle, Date date, String platform)
+    public ArrivalDeparture(Station station, Vehicle vehicle, Date date, String platform, int delay)
     {
         this.station    = station;
         this.vehicle    = vehicle;
         this.date       = date;
         this.platform   = platform;
+        this.delay      = delay;
     }
 
     public Date getDate()
@@ -35,5 +37,10 @@ public class ArrivalDeparture
     public Vehicle getVehicle()
     {
         return vehicle;
-    } 
+    }
+
+    public int getDelay()
+    {
+        return delay;
+    }
 }
