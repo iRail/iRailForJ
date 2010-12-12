@@ -9,6 +9,7 @@ public class ArrivalDeparture
     private Date    date;
     private String  platform;
     private int     delay;
+    private boolean leaving;
 
     public ArrivalDeparture(Station station, Vehicle vehicle, Date date, String platform, int delay)
     {
@@ -42,5 +43,10 @@ public class ArrivalDeparture
     public int getDelay()
     {
         return delay;
+    }
+
+    public boolean isAvailableAt(Date atTime)
+    {
+         return (atTime.getTime() < (getDate().getTime()+(1000*getDelay())));
     }
 }

@@ -33,6 +33,6 @@ public class LiveBoard extends JFrame
 
     public static void main(String[] argv) throws Exception
     {
-        new LiveBoard("http://api.irail.be","nl","Liedekerke");         /// <<<< Change Me
+        new LiveBoard("http://api.irail.be","nl","Brussel Centraal");         /// <<<< Change Me
     }
 }

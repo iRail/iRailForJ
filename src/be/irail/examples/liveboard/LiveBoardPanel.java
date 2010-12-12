@@ -186,12 +186,11 @@ public class LiveBoardPanel extends JPanel implements Observer
             calendar.setTime(departure.getDate());
 
             graphics.setFont(lineFont);
-
-            // if departure time + delay is past, display in grey to show probably left station
-            if((liveBoard.getTimeStamp().getTime()/1000) > ((departure.getDate().getTime()/1000)+departure.getDelay()))
-                graphics.setColor(Color.LIGHT_GRAY);
-            else
+            
+            if(departure.isAvailableAt(liveBoard.getTimeStamp()))
                 graphics.setColor(TEXT_COLOR);
+            else
+                graphics.setColor(Color.LIGHT_GRAY);
 
 
             graphics.drawString(String.format("%1$2d:%2$02d",calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE)),
@@ -200,10 +199,18 @@ public class LiveBoardPanel extends JPanel implements Observer
             graphics.drawString((departure.getStation().getName().length()>MAX_CHARS_IN_STATION?departure.getStation().getName().substring(0, (MAX_CHARS_IN_STATION-2)) + "..":departure.getStation().getName()),
                     lineColumns[STATION_COLUMN],dataYPos + lineBaselineOffset + (line * lineHeight));
 
-            graphics.drawString(String.format("%1$-3s",departure.getVehicle().getType()),
+            if(departure.getVehicle().getType()!=null)
+                graphics.drawString(String.format("%1$-3s",departure.getVehicle().getType()),
+                    lineColumns[TYPE_COLUMN],dataYPos + lineBaselineOffset + (line * lineHeight));
+            else
+                graphics.drawString("---",
                     lineColumns[TYPE_COLUMN],dataYPos + lineBaselineOffset + (line * lineHeight));
 
-            graphics.drawString(String.format("%1$2s",departure.getPlatform()),
+            if(departure.getPlatform()!=null)
+                graphics.drawString(String.format("%1$2s",departure.getPlatform()),
+                    lineColumns[PLATFORM_COLUMN],dataYPos + lineBaselineOffset + (line * lineHeight));
+            else
+             graphics.drawString("--",
                     lineColumns[PLATFORM_COLUMN],dataYPos + lineBaselineOffset + (line * lineHeight));
 
             if(departure.getDelay()>0)

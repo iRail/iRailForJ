@@ -8,7 +8,6 @@ import java.util.Date;
  */
 public class Stop
 {
-
     private Station station;
     private Date    time;
     private int     delay;

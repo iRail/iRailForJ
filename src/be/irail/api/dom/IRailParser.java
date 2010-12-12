@@ -331,7 +331,7 @@ public class IRailParser
                     p = n.item(j).getFirstChild().getNodeValue();
                 }
             }
-            ArrivalDeparture ad = new ArrivalDeparture(s, v, d, p,delay);
+            ArrivalDeparture ad = new ArrivalDeparture(s, v, d, p.equalsIgnoreCase("NA")?null:p,delay);
             a.add(ad);
 
         }
