@@ -13,9 +13,9 @@ public class LiveBoard extends JFrame
     private                 LiveBoardPanel          liveBoardCanvas;
     private                 LiveboardController     liveBoardController;
 
-    public LiveBoard(String url, String language, String station)
+    public LiveBoard(String url, String language, String station, boolean displayiRail)
     {
-        liveBoardCanvas=new LiveBoardPanel();
+        liveBoardCanvas=new LiveBoardPanel(displayiRail);
         liveBoardController=new LiveboardController(new IRail(url, language).setAgent("LiveboardExample_0_1"),new Station(station));
 
         liveBoardController.addObserver(liveBoardCanvas);
@@ -33,6 +33,11 @@ public class LiveBoard extends JFrame
 
     public static void main(String[] argv) throws Exception
     {
-        new LiveBoard("http://api.irail.be","nl","Brussel Centraal");         /// <<<< Change Me
+        boolean displayiRail = true;
+        if(argv[3].equals("")){
+            displayiRail = false;
+        }
+        //Changed this to accept arguments from command line or jnlp
+        new LiveBoard(argv[0],argv[1],argv[2], displayiRail);         /// <<<< Change Me
     }
 }

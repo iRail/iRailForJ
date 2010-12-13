@@ -44,19 +44,22 @@ public class LiveBoardPanel extends JPanel implements Observer
     private Calendar        calendar;
     private Dimension       oldSize;
 
+    private boolean displayiRail;
+
     /*
      * A LiveBoardPanel is an Observer that will show Liveboard instances in an NMBS-like "small station" display
      * Since it's a JPanel, add it to any Container. The Liveboard prefers to be an arbitrary 640x480
      * but will resize to any reasonable size and remain readable as long as possible. Beware that the
      * tricks for determining Font size can be computationally expensive.
      */
-    public LiveBoardPanel()
+    public LiveBoardPanel(boolean displayiRail)
     {
         super();
         calendar = Calendar.getInstance();
         setDoubleBuffered(false);
         setBackground(BACKGROUND_COLOR);
         setPreferredSize(new Dimension(640,480));
+        this.displayiRail = displayiRail;
     }
 
     @Override
@@ -95,7 +98,10 @@ public class LiveBoardPanel extends JPanel implements Observer
         }
 
         for(;line<=12;line++)
-            drawLine(graphics,null,line);   
+            drawLine(graphics,"",line);
+        if(displayiRail)
+            drawLine(graphics,"powered by iRail.be", 12);
+
     }
 
    
@@ -171,6 +177,21 @@ public class LiveBoardPanel extends JPanel implements Observer
             calendar.setTime(liveBoard.getTimeStamp());
             graphics.drawString(String.format("%1$2d:%2$02d (%3$s)",calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),liveBoard.getStation().getName()),
                     lineColumns[TIME_COLUMN],imageableYPos+titleBaselineOffset);
+        }
+    }
+
+    // This is just drawing a simple line for advertisement *evil*
+    private void drawLine(Graphics graphics, String iRail, int line)
+    {
+        graphics.setColor(line%2==0?LINE_COLOR:BACKGROUND_COLOR);
+        graphics.fillRect(imageableXPos, dataYPos + (line * lineHeight), imageableWidth, lineHeight);
+
+        if(!iRail.equals("") && lineFont!=null)
+        {
+            graphics.setFont(lineFont);
+            graphics.setColor(TEXT_COLOR);
+            graphics.drawString((iRail.length()>MAX_CHARS_IN_STATION?iRail.substring(0, (MAX_CHARS_IN_STATION-2)) + "..":iRail),
+                    lineColumns[STATION_COLUMN],dataYPos + lineBaselineOffset + (line * lineHeight));
         }
     }
 
