@@ -1,10 +1,12 @@
 package be.irail.api.data;
 
+import java.io.Serializable;
+
 /**
  *
  * @author pieterc
  */
-public class Station
+public class Station implements Serializable
 {
     String      name;
     String      id;

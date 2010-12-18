@@ -1,12 +1,13 @@
 package be.irail.api.data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author pieterc
  */
-public class Connection
+public class Connection  implements Serializable
 {
     private TripNode    arrival;
     private TripNode    departure;

@@ -1,10 +1,12 @@
 package be.irail.api.data;
 
+import java.io.Serializable;
+
 /**
  *
  * @author pieterc
  */
-public class Location
+public class Location implements Serializable
 {
     double longitude, latitude;
 

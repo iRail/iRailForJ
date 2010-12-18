@@ -16,10 +16,10 @@ public class LiveBoard extends JFrame
     public LiveBoard(String url, String language, String station)
     {
         liveBoardCanvas=new LiveBoardPanel();
-        liveBoardController=new LiveboardController(new IRail(url, language).setAgent("LiveboardExample_0_1"),new Station(station));
+        liveBoardController=new LiveboardController(new IRail(url, language,50).setAgent("LiveboardExample_0_1"),new Station(station));
 
         liveBoardController.addObserver(liveBoardCanvas);
-        liveBoardController.setDelay(60);
+        liveBoardController.setDelay(10);
         liveBoardController.start();
 
         setUndecorated(false);
@@ -33,6 +33,12 @@ public class LiveBoard extends JFrame
 
     public static void main(String[] argv) throws Exception
     {
-        new LiveBoard("http://api.irail.be","nl","Brussel Centraal");         /// <<<< Change Me
+        for(int i=0;i<argv.length;i++)
+            System.err.println("ARG " + i + " = " + argv[i]);
+
+        if(argv.length==3)
+            new LiveBoard(argv[0],argv[1],argv[2]);
+        else
+            new LiveBoard("http://api.irail.be/","nl","Liedekerke");         /// <<<< Change Me
     }
 }

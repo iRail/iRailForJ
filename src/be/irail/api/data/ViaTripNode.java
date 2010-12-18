@@ -1,12 +1,13 @@
 package be.irail.api.data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author pieterc
  */
-public class ViaTripNode
+public class ViaTripNode  implements Serializable
 {
 
     private String platform;

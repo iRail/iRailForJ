@@ -17,9 +17,9 @@ import java.util.Date;
  */
 public class IRail
 {
-    private static final String DEFAULT_LANGUAGE="en";
-    private static final String WRAPPER_SUFFIX="IRailForJ";
-    private static final int    NO_MAX_RESULTS=0;
+    private static final String DEFAULT_LANGUAGE    ="en";
+    private static final String WRAPPER_SUFFIX      ="IRailForJ";
+    private static final int    NO_MAX_RESULTS      =0;
     
     private String  language;
     private int     maxResults;
@@ -157,7 +157,7 @@ public class IRail
      */
     public final IRail setAgent(String agentName)
     {
-        System.setProperty("http.agent", agentName!=null?agentName+";"+WRAPPER_SUFFIX:WRAPPER_SUFFIX);
+        System.setProperty("http.agent", agentName!=null?agentName+" "+WRAPPER_SUFFIX:WRAPPER_SUFFIX);
         return this;
     }
 }

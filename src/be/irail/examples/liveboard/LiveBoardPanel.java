@@ -88,13 +88,16 @@ public class LiveBoardPanel extends JPanel implements Observer
         int line=0;
         for(ArrivalDeparture event : liveBoard.getArrivalsAndDepartures())
         {
-            calendar.setTime(event.getDate());
-            drawLine(graphics,event,line++);
-            if(line>12)
-                break;
+            if(!event.hasLeft())
+            {
+                calendar.setTime(event.getDate());
+                drawLine(graphics,event,line++);
+                if(line>(NUM_LINES-3))
+                    break;
+            }
         }
 
-        for(;line<=12;line++)
+        for(;line<=(NUM_LINES-3);line++)
             drawLine(graphics,null,line);   
     }
 
@@ -140,7 +143,7 @@ public class LiveBoardPanel extends JPanel implements Observer
             lineColumns[TIME_COLUMN]=imageableXPos+metrics.getMaxAdvance();
             lineColumns[STATION_COLUMN]=lineColumns[TIME_COLUMN]+(6*metrics.getMaxAdvance());
             lineColumns[TYPE_COLUMN]=lineColumns[STATION_COLUMN]+((MAX_CHARS_IN_STATION+1)*metrics.getMaxAdvance());
-            lineColumns[PLATFORM_COLUMN]=lineColumns[TYPE_COLUMN]+(4*metrics.getMaxAdvance());
+            lineColumns[PLATFORM_COLUMN]=lineColumns[TYPE_COLUMN]+(5*metrics.getMaxAdvance());
             lineColumns[DELAY_COLUMN]=lineColumns[PLATFORM_COLUMN]+(4*metrics.getMaxAdvance());
         }
     }
@@ -187,7 +190,7 @@ public class LiveBoardPanel extends JPanel implements Observer
 
             graphics.setFont(lineFont);
             
-            if(departure.isAvailableAt(liveBoard.getTimeStamp()))
+            if(departure.shouldHaveLeftAt(liveBoard.getTimeStamp()))
                 graphics.setColor(TEXT_COLOR);
             else
                 graphics.setColor(Color.LIGHT_GRAY);
@@ -200,7 +203,7 @@ public class LiveBoardPanel extends JPanel implements Observer
                     lineColumns[STATION_COLUMN],dataYPos + lineBaselineOffset + (line * lineHeight));
 
             if(departure.getVehicle().getType()!=null)
-                graphics.drawString(String.format("%1$-3s",departure.getVehicle().getType()),
+                graphics.drawString(String.format("%1$-4s",departure.getVehicle().getType()),
                     lineColumns[TYPE_COLUMN],dataYPos + lineBaselineOffset + (line * lineHeight));
             else
                 graphics.drawString("---",

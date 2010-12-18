@@ -1,12 +1,13 @@
 package be.irail.api.data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author pieterc
  */
-public class Stop
+public class Stop  implements Serializable
 {
     private Station station;
     private Date    time;

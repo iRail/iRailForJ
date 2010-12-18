@@ -31,7 +31,7 @@ import org.w3c.dom.NodeList;
  */
 public class IRailParser
 {
-    private static Pattern vehiclePattern = Pattern.compile("^([A-Za-z][A-Za-z])\\.([A-Za-z]+)\\.([a-zA-Z]+)?([0-9]+)$");
+    private static Pattern vehiclePattern = Pattern.compile("^([A-Za-z][A-Za-z])\\.([A-Za-z]+)\\.([a-zA-Z/]+)?([0-9]+)$");
 
     /* -------------------------------------------------------------------------------------------------------------------- */
 
@@ -311,6 +311,7 @@ public class IRailParser
             Date d = null;
             String p = null;
             int delay = Integer.parseInt(m.getNamedItem("delay").getNodeValue());
+            boolean left = (Integer.parseInt(m.getNamedItem("left").getNodeValue())==1);
             
             for (int j = 0; j < n.getLength(); j++)
             {
@@ -331,7 +332,7 @@ public class IRailParser
                     p = n.item(j).getFirstChild().getNodeValue();
                 }
             }
-            ArrivalDeparture ad = new ArrivalDeparture(s, v, d, p.equalsIgnoreCase("NA")?null:p,delay);
+            ArrivalDeparture ad = new ArrivalDeparture(s, v, d, p.equalsIgnoreCase("NA")?null:p,delay,left);
             a.add(ad);
 
         }

@@ -1,12 +1,13 @@
 package be.irail.api.data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author pieterc
  */
-public class VehicleInformation
+public class VehicleInformation  implements Serializable
 {
     private Vehicle     vehicle;
     private List<Stop>  stops;

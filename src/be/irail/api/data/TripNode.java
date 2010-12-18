@@ -1,12 +1,13 @@
 package be.irail.api.data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author pieterc
  */
-public class TripNode
+public class TripNode  implements Serializable
 {
     private Station station;
     private String  platform;
