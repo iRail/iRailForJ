@@ -10,8 +10,8 @@ import be.irail.api.data.Station;
  */
 public class LiveBoard extends JFrame
 {
-    private                 LiveBoardPanel          liveBoardCanvas;
-    private                 LiveboardController     liveBoardController;
+    private LiveBoardPanel          liveBoardCanvas;
+    private LiveboardController     liveBoardController;
 
     public LiveBoard(String url, String language, String station)
     {
@@ -31,14 +31,51 @@ public class LiveBoard extends JFrame
         setVisible(true);
     }
 
+    public void setCaptionLine(String captionLine)
+    {
+        liveBoardCanvas.setCaptionLine(captionLine);
+    }
+
     public static void main(String[] argv) throws Exception
     {
+        String  url     ="http://api.irail.be/";
+        String  lang    ="en";
+        String  station ="Liedekerke";
+        String  caption ="                 Powered by iRail";
+
         for(int i=0;i<argv.length;i++)
             System.err.println("ARG " + i + " = " + argv[i]);
 
-        if(argv.length==3)
-            new LiveBoard(argv[0],argv[1],argv[2]);
+        switch(argv.length)
+        {
+            case 1:
+            station=argv[0];
+            break;
+
+            case 2:
+            station=argv[0];
+            lang=argv[1];
+            break;
+
+            case 3:
+            url=argv[0];
+            lang=argv[1];
+            station=argv[2];
+            break;
+
+            case 4:
+            url=argv[0];
+            lang=argv[1];
+            station=argv[2];
+            if((argv[3].equals("")))
+                caption=null;
+            else
+                caption=argv[3];
+        }
+
+        if(caption!=null)
+            new LiveBoard(url,lang,station).setCaptionLine(caption);
         else
-            new LiveBoard("http://api.irail.be/","nl","Liedekerke");         /// <<<< Change Me
+            new LiveBoard(url,lang,station);
     }
 }

@@ -43,6 +43,7 @@ public class LiveBoardPanel extends JPanel implements Observer
     private Font            titleFont, lineFont;
     private Calendar        calendar;
     private Dimension       oldSize;
+    private String          captionLine;
 
     /*
      * A LiveBoardPanel is an Observer that will show Liveboard instances in an NMBS-like "small station" display
@@ -57,6 +58,11 @@ public class LiveBoardPanel extends JPanel implements Observer
         setDoubleBuffered(false);
         setBackground(BACKGROUND_COLOR);
         setPreferredSize(new Dimension(640,480));
+    }
+
+    public void setCaptionLine(String captionLine)
+    {
+        this.captionLine = captionLine;
     }
 
     @Override
@@ -91,14 +97,19 @@ public class LiveBoardPanel extends JPanel implements Observer
             if(!event.hasLeft())
             {
                 calendar.setTime(event.getDate());
-                drawLine(graphics,event,line++);
+                drawArrivalDeparture(graphics,event,line++);
                 if(line>(NUM_LINES-3))
                     break;
             }
         }
 
-        for(;line<=(NUM_LINES-3);line++)
-            drawLine(graphics,null,line);   
+        // remaining empty lines ; one less if there is a caption line to display
+        for(;line<=(captionLine!=null?(NUM_LINES-4):(NUM_LINES-3));line++)
+            drawLineBackground(graphics, line);
+
+        // This is just drawing a simple line for advertisement *evil*
+        if(captionLine!=null)
+            drawString(graphics,captionLine, (NUM_LINES-3));
     }
 
    
@@ -162,6 +173,12 @@ public class LiveBoardPanel extends JPanel implements Observer
 
     }
 
+    private void drawLineBackground(Graphics graphics, int line)
+    {
+        graphics.setColor(line % 2 == 0 ? LINE_COLOR : BACKGROUND_COLOR);
+        graphics.fillRect(imageableXPos, dataYPos + (line * lineHeight), imageableWidth, lineHeight);
+    }
+
     // draw title at the top, displays timestamp and station name
     private void drawTitle(Graphics graphics)
     {
@@ -177,12 +194,24 @@ public class LiveBoardPanel extends JPanel implements Observer
         }
     }
 
+    private void drawString(Graphics graphics, String text, int line)
+    {
+        drawLineBackground(graphics, line);
+
+        if(lineFont!=null)
+        {
+            graphics.setFont(lineFont);
+            graphics.setColor(TEXT_COLOR);
+            graphics.drawString((text.length()>CHARS_IN_LINE?text.substring(0, (CHARS_IN_LINE-2)) + "..":text),
+                    lineColumns[TIME_COLUMN],dataYPos + lineBaselineOffset + (line * lineHeight));
+        }
+    }
+
     // draw one departure line: time, station name, vehicle type, platform, and optionally delay
     // will vehicles that are supposed to to departed are displayed in light gray
-    private void drawLine(Graphics graphics, ArrivalDeparture departure, int line)
+    private void drawArrivalDeparture(Graphics graphics, ArrivalDeparture departure, int line)
     {
-        graphics.setColor(line%2==0?LINE_COLOR:BACKGROUND_COLOR);
-        graphics.fillRect(imageableXPos, dataYPos + (line * lineHeight), imageableWidth, lineHeight);
+        drawLineBackground(graphics, line);
         
         if(departure!=null && lineFont!=null)
         {
