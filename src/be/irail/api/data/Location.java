@@ -16,6 +16,10 @@ public class Location implements Serializable
         this.latitude = latitude;
     }
 
+    public Location()
+    {
+    }
+
     public double getLongitude()
     {
         return longitude;
@@ -24,5 +28,15 @@ public class Location implements Serializable
     public double getLatitude()
     {
         return latitude;
+    }
+
+    public void setLatitude(double latitude)
+    {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude)
+    {
+        this.longitude = longitude;
     }
 }

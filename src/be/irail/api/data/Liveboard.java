@@ -8,6 +8,7 @@ import java.util.List;
 /**
  *
  * @author pieterc
+ * @author frank@apsu.be
  */
 public class Liveboard  implements Serializable
 {
@@ -20,6 +21,11 @@ public class Liveboard  implements Serializable
         this.timeStamp=timeStamp;
         this.station = station;
         this.arrivalsAndDepartures=arrivalsAndDepartures;
+    }
+    
+    public Liveboard()
+    {
+        this.arrivalsAndDepartures=new ArrayList<ArrivalDeparture>();
     }
 
     public List<ArrivalDeparture> getArrivalsAndDepartures()
@@ -35,5 +41,25 @@ public class Liveboard  implements Serializable
     public Date getTimeStamp()
     {
         return timeStamp;
+    }
+
+    public void setArrivalsAndDepartures(ArrayList<ArrivalDeparture> arrivalsAndDepartures)
+    {
+        this.arrivalsAndDepartures = arrivalsAndDepartures;
+    }
+
+    public void setStation(Station station)
+    {
+        this.station = station;
+    }
+
+    public void setTimeStamp(Date timeStamp)
+    {
+        this.timeStamp = timeStamp;
+    }
+
+    public boolean addArrivalDeparture(ArrivalDeparture arrivalDeparture)
+    {
+        return arrivalsAndDepartures.add(arrivalDeparture);
     }
 }

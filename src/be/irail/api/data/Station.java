@@ -24,6 +24,10 @@ public class Station implements Serializable
         this.name = name.trim();
     }
 
+    public Station()
+    {
+    }
+
     public Location getLocation()
     {
         return location;
@@ -51,7 +55,7 @@ public class Station implements Serializable
 
     public void setName(String name)
     {
-        this.name = name;
+        this.name = name.trim();
     }
 
     @Override
